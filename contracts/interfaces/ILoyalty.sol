@@ -2,11 +2,13 @@
 
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 /**
    	@title ILoyalty contract
    	@dev Provide an interface that other contracts can integrate with Loyalty contract
 */
-interface ILoyalty {
+interface ILoyalty is IERC20 {
     /**
        	@notice Update loyalty points of `_account`
        	@dev  Caller must be Operator

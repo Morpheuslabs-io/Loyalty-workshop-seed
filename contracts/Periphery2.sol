@@ -120,8 +120,8 @@ contract Periphery2 is Ownable {
        	@notice Set exchange rate of multiple pairs
        	@dev  Caller must be Owner
         @param _eventId                 Event id
-        @param _bMemberships            A list of base Membership contracts
-        @param _qMemberships            A list of quote Membership contracts
+        @param _baseMemberships         A list of base Membership contracts
+        @param _quoteMemberships        A list of quote Membership contracts
         @param _baseValues              A list of input amounts
         @param _quoteValues             A list of output amounts
 

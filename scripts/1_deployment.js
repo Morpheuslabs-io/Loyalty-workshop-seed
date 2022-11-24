@@ -63,7 +63,7 @@ async function main() {
     console.log('Set Periphery, Periphery2, and Deployer as Operator in Loyalty contract .........');
     await loyalty.connect(Deployer).setOperator(operators, true);
 
-    console.log('\nSet Periphery, Periphery2, and Deployer as Operator in Voucher contract .........');
+    console.log('Set Periphery, Periphery2, and Deployer as Operator in Voucher contract .........');
     await voucher.connect(Deployer).setOperator(operators, true);
     
     console.log('\n===== DONE =====')

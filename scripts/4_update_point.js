@@ -1,4 +1,4 @@
-const abi = require('../build/artifacts/contracts/Membership.sol/Membership.json').abi;
+const abi = require('../build/artifacts/contracts/Loyalty.sol/Loyalty.json').abi;
 
 async function main() {
     const [operator, account] = await ethers.getSigners();
@@ -7,17 +7,14 @@ async function main() {
     console.log("Account balance:", (await operator.getBalance()).toString());
 
     const provider = ethers.getDefaultProvider(process.env.BTTC_TESTNET_PROVIDER);
-    const Membership = '0x1e7D19060BF3e4E49c5DfBD43F9aAA060DDbe7d1';
-    const membership = new ethers.Contract(Membership, abi, provider);
+    const Loyalty = '0x667979e3C4A5F5628674e3f06fdbdde4D8057fAF';
+    const loyalty = new ethers.Contract(Loyalty, abi, provider);
 
-    //  Register Membership and add Loyalty points to `account`
+    //  Update Loyalty points of an existing `account`
     const memberId = 1;
-    const loyalty_type = 1;
     const value = 9000;
-    console.log("Register Membership and Add Loyalty points .........")
-    const tx = await membership.connect(operator).addMembership(
-        account.address, memberId, loyalty_type, value
-    );
+    console.log("Update Loyalty points .........")
+    const tx = await loyalty.connect(operator).updatePoint(account.address, value, true);
     console.log('TxHash: ', tx.hash);
     await tx.wait();
 

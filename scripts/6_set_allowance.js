@@ -13,7 +13,7 @@ async function main() {
 
     //  Approve an amount of allowance
     console.log("Approve Spender an amount of allowance .........")
-    const Spender = '0x749603Bd4d13607B0eEF7Ac8fe48D53d30DA8bF4';             //  address of Periphery contract
+    const Spender = '0x533e331098ce304c8620270dC460EF57051C6147';             //  address of Periphery contract
     const amount = BigNumber.from('9000000000000000000000000000000');
     const tx = await erc20.connect(caller).approve(Spender, amount);
     console.log('TxHash: ', tx.hash);

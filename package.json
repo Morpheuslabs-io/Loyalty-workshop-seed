@@ -9,7 +9,7 @@
     "bsc": "hardhat run --network bsc",
     "bsc_test": "hardhat run --network bsc_test",
     "bttc": "hardhat run --network bttc",
-    "bttc_test": "hardhat run --network bttc_test"
+    "testnet": "hardhat run --network bttc_test"
   },
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.2.1",

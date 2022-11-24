@@ -3,7 +3,7 @@ async function main() {
     console.log("Deployer account:", Deployer.address);
 
     // console.log("Verify Membership Contract ......")
-    const Membership = '';                    //  Replace by your deployed contract
+    const Membership = '0x6950319Dd4A19B505d792eA8C3bd7Af191afFeA8';                    //  Replace by your deployed contract
     await hre.run("verify:verify", {
         address: Membership,
         constructorArguments: [
@@ -12,7 +12,7 @@ async function main() {
     });
 
     // console.log("Verify Loyalty Contract ......")
-    const Loyalty = '';                    //  Replace by your deployed contract
+    const Loyalty = '0x667979e3C4A5F5628674e3f06fdbdde4D8057fAF';                    //  Replace by your deployed contract
     await hre.run("verify:verify", {
         address: Loyalty,
         constructorArguments: [
@@ -21,7 +21,7 @@ async function main() {
     });
 
     // console.log("Verify Voucher Contract ......")
-    const Voucher = '';                  //  Replace by your deployed contract
+    const Voucher = '0x17b317CC8628373b2ba1673688b15C9BDdFE14eC';                  //  Replace by your deployed contract
     await hre.run("verify:verify", {
         address: Voucher,
         constructorArguments: [
@@ -30,7 +30,7 @@ async function main() {
     });
 
     console.log("Verify Periphery Contract ......")
-    const Periphery = '';                  //  Replace by your deployed contract
+    const Periphery = '0x533e331098ce304c8620270dC460EF57051C6147';                  //  Replace by your deployed contract
     await hre.run("verify:verify", {
         address: Periphery,
         constructorArguments: [
@@ -39,7 +39,7 @@ async function main() {
     });
 
     console.log("Verify Periphery2 Contract ......")
-    const Periphery2 = '';                  //  Replace by your deployed contract
+    const Periphery2 = '0x4E50A26c94d823b7FB05E11EE7F29254e6261514';                  //  Replace by your deployed contract
     await hre.run("verify:verify", {
         address: Periphery2,
         constructorArguments: [Periphery],

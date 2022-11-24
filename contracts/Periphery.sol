@@ -167,16 +167,16 @@ contract Periphery is IPeriphery, Signer, Ownable {
        	@dev  Caller can be ANY
         @param _invoice             Redeem invoice struct
         - membership (address)          Address of Membership contract
-        - memberId (uint256)            Member id of `msg.sender`
+        - memberId (uint256)            Member id of `_msgSender()`
         - point (uint256)               Amount of point to redeem
         - voucher (address)             Address of Voucher contract to receive a value
         - value (uint256)               Additional value to receive after redemption
-        - nonce (uint128)               Current counter of `msg.sender`
+        - nonce (uint128)               Current counter of `_msgSender()`
         - expiry (uint128)              Expiring time of authorizing signature   
         @param _signature           Authorizing signature provided by Verifier
     */
     function redeem(Redeem calldata _invoice, bytes calldata _signature) external override {
-        address _caller = msg.sender;
+        address _caller = _msgSender();
         _precheck(_caller, _invoice.expiry, _invoice.nonce);
         address _loyalty = _checkMembership(_caller, _invoice.membership, _invoice.memberId);
         _checkRedeemInvoiceSig(_caller, _invoice, _signature);
@@ -196,12 +196,12 @@ contract Periphery is IPeriphery, Signer, Ownable {
         - value (uint256)               Additional value to receive after topup request
         - paymentToken (address)        Address of payment token (0x00 for Native coin)
         - totalPayment (uint256)        Total payment amount
-        - nonce (uint128)               Current counter of `msg.sender`
+        - nonce (uint128)               Current counter of `_msgSender()`
         - expiry (uint128)              Expiring time of authorizing signature   
         @param _signature           Authorizing signature provided by Verifier
     */
     function topup(TopUp calldata _invoice, bytes calldata _signature) external payable {
-        address _caller = msg.sender;
+        address _caller = _msgSender();
         _precheck(_caller, _invoice.expiry, _invoice.nonce);
         _checkMembership(_invoice.beneficiary, _invoice.membership, _invoice.memberId);
         _checkTopUpInvoiceSig(_caller, _invoice, _signature);
@@ -223,7 +223,7 @@ contract Periphery is IPeriphery, Signer, Ownable {
         - paymentToken (address)        Address of payment token (0x00 for Native coin)
         - point (uint256)               Additional value to receive after buy request
         - totalPayment (uint256)        Total payment amount
-        - nonce (uint128)               Current counter of `msg.sender`
+        - nonce (uint128)               Current counter of `_msgSender()`
         - expiry (uint128)              Expiring time of authorizing signature   
         @param _signature           Authorizing signature provided by Verifier
     */
@@ -231,7 +231,7 @@ contract Periphery is IPeriphery, Signer, Ownable {
         Buy calldata _invoice,
         bytes calldata _signature
     ) external payable override {
-        address _caller = msg.sender;
+        address _caller = _msgSender();
         _precheck(_caller, _invoice.expiry, _invoice.nonce);
         address _loyalty = _checkMembership(_invoice.beneficiary, _invoice.membership, _invoice.memberId);
         _checkBuyInvoiceSig(_caller, _invoice, _signature);
@@ -241,6 +241,18 @@ contract Periphery is IPeriphery, Signer, Ownable {
         _makePayment(_invoice.paymentToken, _caller, _invoice.totalPayment);
         nonces[_caller]++;
         _updatePoint(_loyalty, _invoice.beneficiary, _invoice.point, true);
+    }
+
+    function upgradeTier(address _membership, uint256 _memberId) external {
+        address _caller = _msgSender();
+        address _loyalty = _checkMembership(_caller, _membership, _memberId);
+        IMembership membership_ = IMembership(_membership);
+        uint256 _currentTier = membership_.tier(_caller, _memberId);
+        uint256 _nextTier = membership_.nextTier(
+            _caller, _memberId, ILoyalty(_loyalty).balanceOf(_caller)
+        );
+        require(_nextTier > _currentTier, "Not enough points to upgrade");
+        membership_.upgrade(_caller, _memberId, _nextTier);
     }
 
     function _precheck(
