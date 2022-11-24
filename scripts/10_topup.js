@@ -1,8 +1,8 @@
-const { BigNumber } = require("ethers");
+const { utils, BigNumber } = require("ethers");
 const abi = require('../build/artifacts/contracts/Periphery.sol/Periphery.json').abi;
 
 const chainId = 1029;
-const Periphery = '0x749603Bd4d13607B0eEF7Ac8fe48D53d30DA8bF4';
+const Periphery = '0x533e331098ce304c8620270dC460EF57051C6147';
 const DOMAIN = {
     name: "Membership and Loyalty",
     version: "Version 1",
@@ -23,38 +23,47 @@ async function main() {
     console.log('Generate a signature to authenticate a purchase request .........')
     const caller = account.address;
     const beneficiary = account.address;
-    const ticketId = BigNumber.from('2');
-    const voucher_type = BigNumber.from('2');
-    const value = 2000;
+    const membership = '0x6950319Dd4A19B505d792eA8C3bd7Af191afFeA8';
+    const memberId = BigNumber.from('1');
+    const voucher = '0x17b317CC8628373b2ba1673688b15C9BDdFE14eC';
+    const value = utils.parseUnits("2000.0", "ether");
     const paymentToken = '0xE4B5aE864C54b4E5744aFfFfcA2ddA3daea48B08';
-    const totalPayment = 2000000000;
-    const nonce = 3;
-    const expiry = timestamp + 1800;     //  expire in 30 mins
+    const totalPayment = BigNumber.from('2000000000');
+    const nonce = BigNumber.from('2');
+    const expiry = BigNumber.from(timestamp + 1800);     //  expire in 30 mins
+
     const types = {
         TopUp: [
-            { name: "caller", type: "address" },
             { name: "beneficiary", type: "address" },
-            { name: "ticketId", type: "uint256" },
-            { name: "typeOf", type: "uint256" },
+            { name: "membership", type: "address" },
+            { name: "memberId", type: "uint256" },
+            { name: "voucher", type: "address" },
             { name: "value", type: "uint256" },
             { name: "paymentToken", type: "address" },
             { name: "totalPayment", type: "uint256" },
             { name: "nonce", type: "uint128" },
             { name: "expiry", type: "uint128" },
         ],
+        TopUpAction: [
+            { name: "caller", type: "address" },
+            { name: "data", type: "TopUp" },
+        ],
     };
     const values = {
-        caller: caller,                 beneficiary: beneficiary,       ticketId: ticketId,     
-        typeOf: voucher_type,           value: value,                   paymentToken: paymentToken,
-        totalPayment: totalPayment,     nonce: nonce,                   expiry: expiry,
+        caller: caller,                 
+        data: {
+            beneficiary: beneficiary,       membership: membership,         memberId: memberId,           
+            voucher: voucher,               value: value,                   paymentToken: paymentToken,
+            totalPayment: totalPayment,     nonce: nonce,                   expiry: expiry,
+        }
     };
     const sig = await operator._signTypedData(DOMAIN, types, values);
     const invoice = [
-        beneficiary, ticketId, voucher_type, value, paymentToken, totalPayment, nonce, expiry
+        beneficiary, membership, memberId, voucher, value, paymentToken, totalPayment, nonce, expiry
     ]
 
     //  Send a request to purchase or top-up a gift card
-    console.log('Purchase/Top-up a gift card .........')
+    console.log('Top-up a gift card/voucher .........')
     await periphery.connect(account).callStatic.topup(invoice, sig);
     const tx = await periphery.connect(account).topup(invoice, sig);
     console.log('TxHash: ', tx.hash);
