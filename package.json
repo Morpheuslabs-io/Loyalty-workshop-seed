@@ -1,0 +1,40 @@
+{
+  "name": "smart-contracts",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "prettier": "prettier --write **/*.sol **/**/*.sol",
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "bsc": "hardhat run --network bsc",
+    "bsc_test": "hardhat run --network bsc_test",
+    "bttc": "hardhat run --network bttc",
+    "bttc_test": "hardhat run --network bttc_test"
+  },
+  "dependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.1",
+    "@nomiclabs/hardhat-etherscan": "^3.1.2",
+    "@openzeppelin/contracts": "^4.7.3",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.12.2",
+    "hardhat-deploy": "^0.11.20",
+    "fetch": "^1.1.0",
+    "config-js": "^1.1.15",
+    "dotenv": "^16.0.3",
+    "csv-parser": "^3.0.0"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@atixlabs/hardhat-time-n-mine": "^0.0.5",
+    "chai": "^4.3.7",
+    "chai-as-promised": "^7.1.1",
+    "ethereum-waffle": "^3.4.4",
+    "hardhat-gas-reporter": "^1.0.9",
+    "mocha": "^10.1.0",
+    "prettier": "^2.7.1",
+    "prettier-plugin-solidity": "^1.0.0-rc.1",
+    "solhint": "^3.3.7",
+    "merkletreejs": "^0.2.32",
+    "bn.js": "^5.2.1"
+  }
+}
