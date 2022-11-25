@@ -17,7 +17,10 @@ async function main() {
     const periphery = new ethers.Contract(Periphery, abi, provider);
 
     const [operator, account] = await ethers.getSigners();
-    console.log("Operator account:", operator.address);
+    console.log("Operator:", operator.address);
+    console.log("Balance:", (await operator.getBalance()).toString());
+    console.log("Buyer:", account.address);
+    console.log("Balance:", (await account.getBalance()).toString());
     
     //  Generate a signature to authenticate a purchase request
     console.log('Generate a signature to authenticate a purchase request .........')

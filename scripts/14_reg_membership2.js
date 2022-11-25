@@ -9,7 +9,7 @@ async function main() {
     console.log("Balance:", (await account.getBalance()).toString());
 
     const provider = ethers.getDefaultProvider(process.env.BTTC_TESTNET_PROVIDER);
-    const Membership = '0x6950319Dd4A19B505d792eA8C3bd7Af191afFeA8';
+    const Membership = '0xDF80f659B832399f6B01f1bC5B420Ff1F5aB4384';
     const membership = new ethers.Contract(Membership, abi, provider);
 
     //  Register Membership

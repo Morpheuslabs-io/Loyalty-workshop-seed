@@ -8,7 +8,7 @@ async function main() {
     console.log('\nDeploy Membership Contract .........');
     const Membership = await ethers.getContractFactory('Membership', Deployer);
     const membership = await Membership.deploy(
-        "Amazon Membership", "AMZM", "https://example.com/amazon_membership/"
+        "Starbuck Membership", "SBKM", "https://example.com/starbuck_membership/"
     );
     console.log('Tx Hash: %s', membership.deployTransaction.hash);
     await membership.deployed();
@@ -19,7 +19,7 @@ async function main() {
     console.log('\nDeploy Loyalty Contract .........');
     const Loyalty = await ethers.getContractFactory('Loyalty', Deployer);
     const loyalty = await Loyalty.deploy(
-        "Amazon Loyalty", "AMZL", 0
+        "Starbuck Loyalty", "SBKL", 0
     );
     console.log('Tx Hash: %s', loyalty.deployTransaction.hash);
     await loyalty.deployed();
@@ -30,45 +30,36 @@ async function main() {
     console.log('\nDeploy Voucher Contract .........');
     const Voucher = await ethers.getContractFactory('Voucher', Deployer);
     const voucher = await Voucher.deploy(
-        "Amazon Voucher", "AMZV", 18
+        "Starbuck Voucher", "SBKV", 18
     );
     console.log('Tx Hash: %s', voucher.deployTransaction.hash);
     await voucher.deployed();
 
     console.log('Voucher Contract: ', voucher.address);
 
-    //  Deploy Periphery contract
-    console.log('\nDeploy Periphery Contract .........');
-    const Periphery = await ethers.getContractFactory('Periphery', Deployer);
-    const periphery = await Periphery.deploy(Deployer.address, Deployer.address);
-    console.log('Tx Hash: %s', periphery.deployTransaction.hash);
-    await periphery.deployed();
-
-    console.log('Periphery Contract: ', periphery.address);
-
-    //  Deploy Periphery2 contract
-    console.log('\nDeploy Periphery2 Contract .........');
-    const Periphery2 = await ethers.getContractFactory('Periphery2', Deployer);
-    const periphery2 = await Periphery2.deploy('0x533e331098ce304c8620270dC460EF57051C6147');
-    console.log('Tx Hash: %s', periphery2.deployTransaction.hash);
-    await periphery2.deployed();
-
-    console.log('Periphery2 Contract: ', periphery2.address);
-
     //  Set Periphery, Periphery2, and Deployer as Operator
-    const operators = [periphery.address, periphery2.address, Deployer.address];
-    console.log('\nSet Periphery, Periphery2, and Deployer as Operator in Membership contracts .........');
+    const Periphery = '0x533e331098ce304c8620270dC460EF57051C6147';
+    const Periphery2 = '0x4E50A26c94d823b7FB05E11EE7F29254e6261514';
+    const operators = [Periphery, Periphery2, Deployer.address];
+    console.log('\nSet Periphery, Periphery2, and Deployer as Operator in new Membership contract .........');
     let tx = await membership.connect(Deployer).setOperator(operators, true);
     console.log('TxHash: ', tx.hash);
     await tx.wait();
-    
-    console.log('Set Periphery, Periphery2, and Deployer as Operator in Loyalty contracts .........');
+
+    console.log('Set Periphery, Periphery2, and Deployer as Operator in new Loyalty contract .........');
     tx = await loyalty.connect(Deployer).setOperator(operators, true);
     console.log('TxHash: ', tx.hash);
     await tx.wait();
 
-    console.log('Set Periphery, Periphery2, and Deployer as Operator in Voucher contracts .........');
+    console.log('Set Periphery, Periphery2, and Deployer as Operator in new Voucher contract .........');
     tx = await voucher.connect(Deployer).setOperator(operators, true);
+    console.log('TxHash: ', tx.hash);
+    await tx.wait();
+
+    //  Config tier list for this membership type
+    console.log("Config Tiers'requirements - Membership .........")
+    const values = [10000, 20000, 50000, 100000, 300000];
+    tx = await membership.connect(Deployer).config(values);
     console.log('TxHash: ', tx.hash);
     await tx.wait();
     

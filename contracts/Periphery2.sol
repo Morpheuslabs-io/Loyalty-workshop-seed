@@ -151,7 +151,7 @@ contract Periphery2 is Ownable {
             "Invalid length"
         );
 
-        _eventId != 0 ? _setGlobalRate(_len, _baseMemberships, _quoteMemberships, _baseValues, _quoteValues) : _setSpecialRate(_len, _eventId, _baseMemberships, _quoteMemberships, _baseValues, _quoteValues);
+        _eventId == 0 ? _setGlobalRate(_len, _baseMemberships, _quoteMemberships, _baseValues, _quoteValues) : _setSpecialRate(_len, _eventId, _baseMemberships, _quoteMemberships, _baseValues, _quoteValues);
     }
 
     /**

@@ -3,8 +3,8 @@ const abi = require('../build/artifacts/contracts/Membership.sol/Membership.json
 async function main() {
     const [owner] = await ethers.getSigners();
 
-    console.log("Owner account:", owner.address);
-    console.log("Account balance:", (await owner.getBalance()).toString());
+    console.log("Owner:", owner.address);
+    console.log("Balance:", (await owner.getBalance()).toString());
 
     const provider = ethers.getDefaultProvider(process.env.BTTC_TESTNET_PROVIDER);
     const Membership = '0x6950319Dd4A19B505d792eA8C3bd7Af191afFeA8';
@@ -13,8 +13,8 @@ async function main() {
     const values = [10000, 20000, 50000, 100000, 300000];
 
     //  Config tier list for this membership type
-    console.log("Config Tiers'requirements .........")
-    const tx = await membership.connect(owner).config(values);
+    console.log("Config Tiers'requirements - Membership 1.........")
+    let tx = await membership.connect(owner).config(values);
     console.log('TxHash: ', tx.hash);
     await tx.wait();
 

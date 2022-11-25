@@ -4,8 +4,8 @@ const abi = require('../build/artifacts/contracts/mock/Token20.sol/Token20.json'
 async function main() {
     const [admin, caller] = await ethers.getSigners();
 
-    console.log("Caller account:", caller.address);
-    console.log("Account balance:", (await caller.getBalance()).toString());
+    console.log("Caller:", caller.address);
+    console.log("Balance:", (await caller.getBalance()).toString());
 
     const provider = ethers.getDefaultProvider(process.env.BTTC_TESTNET_PROVIDER);
     const ERC20 = '0xE4B5aE864C54b4E5744aFfFfcA2ddA3daea48B08';

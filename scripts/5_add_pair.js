@@ -3,8 +3,8 @@ const abi = require('../build/artifacts/contracts/Periphery.sol/Periphery.json')
 async function main() {
     const [owner] = await ethers.getSigners();
 
-    console.log("Owner account:", owner.address);
-    console.log("Account balance:", (await owner.getBalance()).toString());
+    console.log("Owner:", owner.address);
+    console.log("Balance:", (await owner.getBalance()).toString());
 
     const provider = ethers.getDefaultProvider(process.env.BTTC_TESTNET_PROVIDER);
     const Periphery = '0x533e331098ce304c8620270dC460EF57051C6147';

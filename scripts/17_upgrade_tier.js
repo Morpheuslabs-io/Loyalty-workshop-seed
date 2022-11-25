@@ -12,7 +12,7 @@ async function main() {
 
     //  Calling to upgrade tier
     console.log("Calling to upgrade tier .........")
-    const membership = '0x6950319Dd4A19B505d792eA8C3bd7Af191afFeA8';
+    const membership = '0xDF80f659B832399f6B01f1bC5B420Ff1F5aB4384';
     const memberId = 1;
     const tx = await periphery.connect(account).upgradeTier(membership, memberId);
     console.log('TxHash: ', tx.hash);

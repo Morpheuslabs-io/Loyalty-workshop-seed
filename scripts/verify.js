@@ -39,7 +39,7 @@ async function main() {
     });
 
     console.log("Verify Periphery2 Contract ......")
-    const Periphery2 = '0x4E50A26c94d823b7FB05E11EE7F29254e6261514';                  //  Replace by your deployed contract
+    const Periphery2 = '0x6098b3bcEce6E76a387e1d0689Fbd38Af0dC293f';                  //  Replace by your deployed contract
     await hre.run("verify:verify", {
         address: Periphery2,
         constructorArguments: [Periphery],
