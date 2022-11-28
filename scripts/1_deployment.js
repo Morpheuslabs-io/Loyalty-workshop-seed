@@ -49,7 +49,7 @@ async function main() {
     //  Deploy Periphery2 contract
     console.log('\nDeploy Periphery2 Contract .........');
     const Periphery2 = await ethers.getContractFactory('Periphery2', Deployer);
-    const periphery2 = await Periphery2.deploy('0x533e331098ce304c8620270dC460EF57051C6147');
+    const periphery2 = await Periphery2.deploy(periphery.address);
     console.log('Tx Hash: %s', periphery2.deployTransaction.hash);
     await periphery2.deployed();
 

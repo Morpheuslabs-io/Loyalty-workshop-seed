@@ -8,6 +8,15 @@ require("@atixlabs/hardhat-time-n-mine");
 require("hardhat-deploy");
 require("hardhat-gas-reporter");
 
+require('./tasks/buy_pts');
+require('./tasks/demo');
+require('./tasks/redeem');
+require('./tasks/reg_member');
+require('./tasks/set_allowance');
+require('./tasks/topup');
+require('./tasks/update_pts');
+require('./tasks/upgrade_tier');
+
 const mnemonic = process.env.MNEMONIC
 
 module.exports = {
