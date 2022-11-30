@@ -249,7 +249,7 @@ contract Periphery2 is Ownable {
             uint256 _currentTime = block.timestamp;
             Schedule memory schedule_ = _schedules[_eventId];
             require(
-                schedule_.start != 0 && schedule_.start <= _currentTime && _currentTime <= schedule_.end,
+                schedule_.start != 0 && _currentTime <= schedule_.end,
                 "Invalid request"
             );
         }

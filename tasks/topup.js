@@ -1,12 +1,15 @@
 const { task } = require('hardhat/config');
-const { BigNumber } = require('ethers');
+const { utils, BigNumber } = require('ethers');
 const abi = require('../build/artifacts/contracts/Periphery.sol/Periphery.json').abi;
 
 task('topup', 'Topup voucher value')
     .addParam('membership', 'address of Membership contract')
     .addParam('voucher', 'address of Voucher contract')
     .addParam('periphery', 'address of Periphery contract')
-    .setAction( async( {membership, voucher, periphery} ) => {
+    .addParam('buyer', 'address of Buyer')
+    .addParam('memberid', 'member id')
+    .addParam('amount', 'topup amount')
+    .setAction( async( {membership, voucher, periphery, buyer, memberid, amount} ) => {
         const chainId = 1029;
         const DOMAIN = {
             name: 'Membership and Loyalty',
@@ -17,9 +20,18 @@ task('topup', 'Topup voucher value')
 
         const [...accounts] = await ethers.getSigners();
         const provider = ethers.getDefaultProvider(process.env.BTTC_TESTNET_PROVIDER);
+        const block = await provider.getBlockNumber();
+        const timestamp = (await provider.getBlock(block)).timestamp;
         const Periphery = new ethers.Contract(periphery, abi, provider);
         const Operator = accounts[0];
-        const Buyer = accounts[1];
+        
+        let Buyer;
+        if (buyer == accounts[0].address)
+            Buyer = accounts[0];
+        else if (buyer == accounts[1].address)
+            Buyer = accounts[1];
+        else if (buyer == accounts[2].address)
+            Buyer = accounts[2];
 
         console.log('Operator:', Operator.address);
         console.log('Buyer:', Buyer.address);
@@ -28,10 +40,9 @@ task('topup', 'Topup voucher value')
         console.log('Generate a signature to authenticate a purchase request .........')
         const caller = Buyer.address;
         const beneficiary = Buyer.address;
-        const memberId = BigNumber.from('1');
-        const value = utils.parseUnits("2000.0", "ether");
+        const value = utils.parseUnits(amount, "ether");
         const paymentToken = '0xE4B5aE864C54b4E5744aFfFfcA2ddA3daea48B08';
-        const totalPayment = BigNumber.from('2000000000');
+        const totalPayment = BigNumber.from(amount).mul('1000000');
         const nonce = await Periphery.nonces(caller);
         const expiry = BigNumber.from(timestamp + 1800);     //  expire in 30 mins
 
@@ -55,14 +66,14 @@ task('topup', 'Topup voucher value')
         const values = {
             caller: caller,                 
             data: {
-                beneficiary: beneficiary,       membership: membership,         memberId: memberId,           
+                beneficiary: beneficiary,       membership: membership,         memberId: memberid,           
                 voucher: voucher,               value: value,                   paymentToken: paymentToken,
                 totalPayment: totalPayment,     nonce: nonce,                   expiry: expiry,
             }
         };
         const sig = await Operator._signTypedData(DOMAIN, types, values);
         const invoice = [
-            beneficiary, membership, memberId, voucher, value, paymentToken, totalPayment, nonce, expiry
+            beneficiary, membership, memberid, voucher, value, paymentToken, totalPayment, nonce, expiry
         ]
     
         //  Send a request to purchase or top-up a gift card

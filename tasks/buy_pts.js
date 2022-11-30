@@ -5,8 +5,10 @@ const abi = require('../build/artifacts/contracts/Periphery.sol/Periphery.json')
 task('buy_pts', 'Buy loyalty points')
     .addParam('membership', 'address of Membership contract')
     .addParam('periphery', 'address of Periphery contract')
+    .addParam('buyer', 'address of Buyer')
+    .addParam('memberid', 'memberId')
     .addParam('pts', 'loyalty points to be purchased')
-    .setAction( async( {membership, periphery, pts} ) => {
+    .setAction( async( {membership, periphery, buyer, memberid, pts} ) => {
         const chainId = 1029;
         const DOMAIN = {
             name: 'Membership and Loyalty',
@@ -17,9 +19,18 @@ task('buy_pts', 'Buy loyalty points')
 
         const [...accounts] = await ethers.getSigners();
         const provider = ethers.getDefaultProvider(process.env.BTTC_TESTNET_PROVIDER);
+        const block = await provider.getBlockNumber();
+        const timestamp = (await provider.getBlock(block)).timestamp;
         const Periphery = new ethers.Contract(periphery, abi, provider);
         const Operator = accounts[0];
-        const Buyer = accounts[1];
+        
+        let Buyer;
+        if (buyer == accounts[0].address)
+            Buyer = accounts[0];
+        else if (buyer == accounts[1].address)
+            Buyer = accounts[1];
+        else if (buyer == accounts[2].address)
+            Buyer = accounts[2];
 
         console.log('Operator:', Operator.address);
         console.log('Buyer:', Buyer.address);
@@ -28,9 +39,8 @@ task('buy_pts', 'Buy loyalty points')
         console.log('Generate a signature to authenticate a purchase request .........')
         const caller = Buyer.address;
         const beneficiary = Buyer.address;
-        const memberId = BigNumber.from('1');
         const paymentToken = '0xE4B5aE864C54b4E5744aFfFfcA2ddA3daea48B08';
-        const totalPayment = BigNumber.from('200000000');
+        const totalPayment = BigNumber.from(pts).mul('200000');
         const nonce = await Periphery.nonces(caller);
         const expiry = BigNumber.from(timestamp + 1800);     //  expire in 30 mins
 
@@ -55,7 +65,7 @@ task('buy_pts', 'Buy loyalty points')
             data: {
                 beneficiary: beneficiary,
                 membership: membership,
-                memberId: memberId,
+                memberId: memberid,
                 paymentToken: paymentToken,
                 point: pts,
                 totalPayment: totalPayment,
@@ -64,7 +74,7 @@ task('buy_pts', 'Buy loyalty points')
             }
         };
         const invoice = [
-            beneficiary, membership, memberId, paymentToken, pts, totalPayment, nonce, expiry
+            beneficiary, membership, memberid, paymentToken, pts, totalPayment, nonce, expiry
         ]
         const sig = await Operator._signTypedData(DOMAIN, types, values);
         //  Send a request to purchase Loyalty Points

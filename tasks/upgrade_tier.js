@@ -4,18 +4,26 @@ const abi = require('../build/artifacts/contracts/Periphery.sol/Periphery.json')
 task('upgrade_tier', 'Upgrade current tier')
     .addParam('membership', 'address of Membership contract')
     .addParam('periphery', 'address of Periphery contract')
-    .setAction( async( {membership, periphery} ) => {
+    .addParam('caller', 'address of Caller')
+    .addParam('memberid', 'member id')
+    .setAction( async( {membership, periphery, caller, memberid} ) => {
         const [...accounts] = await ethers.getSigners();
         const provider = ethers.getDefaultProvider(process.env.BTTC_TESTNET_PROVIDER);
         const Periphery = new ethers.Contract(periphery, abi, provider);
-        const Caller = accounts[1];
+
+        let Caller;
+        if (caller == accounts[0].address)
+            Caller = accounts[0];
+        else if (caller == accounts[1].address)
+            Caller = accounts[1];
+        else if (caller == accounts[2].address)
+            Caller = accounts[2];
 
         console.log('Caller:', Caller.address);
 
         //  Calling to upgrade tier
         console.log("Calling to upgrade tier .........")
-        const memberId = 1;
-        const tx = await Periphery.connect(Caller).upgradeTier(membership, memberId);
+        const tx = await Periphery.connect(Caller).upgradeTier(membership, memberid);
         console.log('TxHash: ', tx.hash);
         await tx.wait();
 

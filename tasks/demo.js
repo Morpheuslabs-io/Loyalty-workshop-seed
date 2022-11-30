@@ -1,4 +1,5 @@
 const { task } = require('hardhat/config');
+const days = 24 * 3600;
 
 task('demo', 'Deploy and config settings in contracts')
     .setAction( async() => {
@@ -134,14 +135,14 @@ task('demo', 'Deploy and config settings in contracts')
         console.log("\nRegister Membership, Loyalty and Voucher contracts in Periphery contract .........");
         console.log("Register Membership1, Loyalty1 and Voucher1 .........")
         tx = await periphery.connect(Owner).addPair(
-            membership1, loyalty1, voucher1
+            membership1.address, loyalty1.address, voucher1.address
         );
         console.log('TxHash: ', tx.hash);
         await tx.wait();
 
         console.log("Register Membership2, Loyalty2 and Voucher2 .........")
         tx = await periphery.connect(Owner).addPair(
-            membership2, loyalty2, voucher2
+            membership2.address, loyalty2.address, voucher2.address
         );
         console.log('TxHash: ', tx.hash);
         await tx.wait();
@@ -149,7 +150,7 @@ task('demo', 'Deploy and config settings in contracts')
         //  Add new Voucher to Membership 1
         console.log("Add Voucher2 to Membership1 pair .........");
         const vouchers = [voucher2.address]
-        tx = await periphery.connect(Owner).updateVouchers(membership1, vouchers, true);
+        tx = await periphery.connect(Owner).updateVouchers(membership1.address, vouchers, true);
         console.log('TxHash: ', tx.hash);
         await tx.wait();
 
@@ -166,8 +167,8 @@ task('demo', 'Deploy and config settings in contracts')
         await tx.wait();
 
         //  Set Regular and Special exchange rates
-        const bMemberships = [membership1];            let bValues = [1];
-        const qMemberships = [membership2];            let qValues = [5];
+        const bMemberships = [membership1.address];            let bValues = [1];
+        const qMemberships = [membership2.address];            let qValues = [5];
         console.log('\nSet exchange rates in Periphery2 contract .........');
         console.log('Set regular exchange rate .........');
         tx = await periphery2.connect(Owner).setXRate(

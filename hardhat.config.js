@@ -14,6 +14,7 @@ require('./tasks/swap');
 require('./tasks/topup');
 require('./tasks/redeem');
 require('./tasks/buy_pts');
+require('./tasks/accounts');
 require('./tasks/reg_member');
 require('./tasks/update_pts');
 require('./tasks/upgrade_tier');

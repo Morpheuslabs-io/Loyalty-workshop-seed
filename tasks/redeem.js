@@ -1,13 +1,15 @@
 const { task } = require('hardhat/config');
-const { BigNumber } = require('ethers');
+const { utils, BigNumber } = require('ethers');
 const abi = require('../build/artifacts/contracts/Periphery.sol/Periphery.json').abi;
 
 task('redeem', 'Redeem loyalty points')
     .addParam('membership', 'address of Membership contract')
     .addParam('voucher', 'address of Voucher contract')
     .addParam('periphery', 'address of Periphery contract')
+    .addParam('caller', 'address of Caller')
+    .addParam('memberid', 'member id')
     .addParam('pts', 'loyalty points to be redeem')
-    .setAction( async( {membership, voucher, periphery, pts} ) => {
+    .setAction( async( {membership, voucher, periphery, caller, memberid, pts} ) => {
         const chainId = 1029;
         const DOMAIN = {
             name: 'Membership and Loyalty',
@@ -18,18 +20,28 @@ task('redeem', 'Redeem loyalty points')
 
         const [...accounts] = await ethers.getSigners();
         const provider = ethers.getDefaultProvider(process.env.BTTC_TESTNET_PROVIDER);
+        const block = await provider.getBlockNumber();
+        const timestamp = (await provider.getBlock(block)).timestamp;
         const Periphery = new ethers.Contract(periphery, abi, provider);
         const Operator = accounts[0];
-        const Beneficiary = accounts[1];
+
+        let Beneficiary;
+        if (caller == accounts[0].address)
+            Beneficiary = accounts[0];
+        else if (caller == accounts[1].address)
+            Beneficiary = accounts[1];
+        else if (caller == accounts[2].address)
+            Beneficiary = accounts[2];
 
         console.log('Operator:', Operator.address);
         console.log('Beneficiary:', Beneficiary.address);
 
         //  Generate a signature to authenticate a redeem request
         console.log('Generate a signature to authenticate a redeem request .........')
-        const caller = Beneficiary.address;
-        const memberId = BigNumber.from('1');
-        const value = utils.parseUnits("100.0", "ether");
+        const Caller = Beneficiary.address;
+        const value = utils.parseUnits(
+            BigNumber.from(pts).div(100).toString(), "ether"
+        );
         const nonce = await Periphery.nonces(caller);
         const expiry = BigNumber.from(timestamp + 1800);     //  expire in 30 mins
 
@@ -49,15 +61,15 @@ task('redeem', 'Redeem loyalty points')
             ],
         };
         const values = {
-            caller: caller,
+            caller: Caller,
             data: {
-                membership: membership,     memberId: memberId,     point: pts,     voucher: voucher, 
+                membership: membership,     memberId: memberid,     point: pts,     voucher: voucher, 
                 value: value,               nonce: nonce,           expiry: expiry,
             }          
         };
         const sig = await Operator._signTypedData(DOMAIN, types, values);
         const redeem = [
-            membership, memberId, pts, voucher, value, nonce, expiry
+            membership, memberid, pts, voucher, value, nonce, expiry
         ]
     
         //  Send a request to redeem Loyalty Points

@@ -1,0 +1,229 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IPeriphery",
+  "sourceName": "contracts/interfaces/IPeriphery.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "beneficiary",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "membership",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "memberId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "paymentToken",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "point",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalPayment",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint128",
+              "name": "nonce",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "expiry",
+              "type": "uint128"
+            }
+          ],
+          "internalType": "struct IPeriphery.Buy",
+          "name": "_invoice",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_signature",
+          "type": "bytes"
+        }
+      ],
+      "name": "buy",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_membership",
+          "type": "address"
+        }
+      ],
+      "name": "disabled",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_membership",
+          "type": "address"
+        }
+      ],
+      "name": "getLoyalty",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "membership",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "memberId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "point",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "voucher",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint128",
+              "name": "nonce",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "expiry",
+              "type": "uint128"
+            }
+          ],
+          "internalType": "struct IPeriphery.Redeem",
+          "name": "_invoice",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_signature",
+          "type": "bytes"
+        }
+      ],
+      "name": "redeem",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "beneficiary",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "membership",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "memberId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "voucher",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "paymentToken",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalPayment",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint128",
+              "name": "nonce",
+              "type": "uint128"
+            },
+            {
+              "internalType": "uint128",
+              "name": "expiry",
+              "type": "uint128"
+            }
+          ],
+          "internalType": "struct IPeriphery.TopUp",
+          "name": "_invoice",
+          "type": "tuple"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_signature",
+          "type": "bytes"
+        }
+      ],
+      "name": "topup",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

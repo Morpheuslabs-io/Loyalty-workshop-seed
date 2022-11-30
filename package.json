@@ -10,7 +10,17 @@
     "bsc_test": "hardhat run --network bsc_test",
     "bttc": "hardhat run --network bttc",
     "testnet": "hardhat run --network bttc_test",
-    "demo": "hardhat demo --network bttc_test"
+    "accounts": "hardhat accounts --network bttc_test",
+
+    "demo": "hardhat demo --network bttc_test",
+    "reg_mem": "hardhat reg_member --network bttc_test",
+    "update_pts": "hardhat update_pts --network bttc_test",
+    "set_allowance": "hardhat set_allowance --network bttc_test",
+    "buy_pts": "hardhat buy_pts --network bttc_test",
+    "upgrade_tier": "hardhat upgrade_tier --network bttc_test",
+    "redeem": "hardhat redeem --network bttc_test",
+    "topup": "hardhat topup --network bttc_test",
+    "swap": "hardhat swap --network bttc_test"
   },
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.2.1",
