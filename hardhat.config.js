@@ -45,37 +45,11 @@ module.exports = {
             live: false, 
             saveDeployments: true
         },
-        bsc: {
-            url: process.env.BSC_MAINNET_PROVIDER,
-            accounts: [
-                process.env.MAINNET_DEPLOYER,
-            ],
-            timeout: 900000,
-            chainId: 56,
-        },
-        bsc_test: {
-            url: process.env.BSC_TESTNET_PROVIDER,
-            accounts: [
-                process.env.TESTNET_DEPLOYER
-            ],
-            timeout: 20000,
-            chainId: 97
-        },
-        bttc: {
-            url: process.env.BTTC_MAINNET_PROVIDER,
-            accounts: [
-                process.env.MAINNET_DEPLOYER
-            ],
-            gasPrice: 300000000000000,      // 300,000 GWei
-            timeout: 1200000,       //   20 mins
-            chainId: 199
-        },
         bttc_test: {
             url: process.env.BTTC_TESTNET_PROVIDER,
             accounts: [
-                process.env.TESTNET_DEPLOYER,
-                process.env.ANOTHER_ACCOUNT1,
-                process.env.ANOTHER_ACCOUNT2
+                process.env.DEPLOYER,
+                process.env.ACCOUNT
             ],
             timeout: 20000,
             chainId: 1029
@@ -91,7 +65,6 @@ module.exports = {
     },
 
     etherscan: {
-        // apiKey: process.env.BSC_API_KEY,
         apiKey: process.env.BTTC_API_KEY,
         customChains: [
             {
