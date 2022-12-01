@@ -1,6 +1,6 @@
-### Running experiments
+<h3 id="experiment_start">Running experiments</h3>
 
-<h6 id="experiment_start">Get Account list</h6>
+<h6>Get Account list</h6>
 
 - Get accounts will be using in this experiment by running a following command:
 
@@ -84,7 +84,7 @@ Voucher2: https://testnet.bttcscan.com/address/0xD36e199a505209d10d4E5D01D9F650E
 
 <h6>Register new Member</h6>
 
-- Register `Account2` as a new member of `Membership1` (Member ID = 1)
+- Register `Account2` as a new member of `Membership1` (member id = 1)
 
 ```bash
 yarn reg_mem --membership $Membership1 --member $Account2 --memberid 1

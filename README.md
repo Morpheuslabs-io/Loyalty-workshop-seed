@@ -7,7 +7,7 @@
     - Paste copied content into `.env` file
     - Next, you need private keys of two funded accounts to be pasted into `.env` file
     <p align="center">
-        <img src="./images/img8.png" alt="env file" width="50%" height="100%"> 
+        <img src="./images/img8.png" alt="env file" width="70%" height="100%"> 
     </p>
 
     - Open your Metamask wallet -> click on three dots -> choose `Account details`
@@ -30,7 +30,7 @@
 **WARNING**: 
 - DO NOT share private keys to anyone even these accounts only use for testing purpose
 - DO NOT use your main accounts
-- Recommend to create brand new accounts for testing purpose in this experiment 
+- Recommend to create brand new accounts in this experiment 
 
 <h3 id="installation">Installation</h3>
 
