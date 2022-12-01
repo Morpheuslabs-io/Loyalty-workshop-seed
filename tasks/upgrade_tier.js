@@ -16,8 +16,6 @@ task('upgrade_tier', 'Upgrade current tier')
             Caller = accounts[0];
         else if (caller == accounts[1].address)
             Caller = accounts[1];
-        else if (caller == accounts[2].address)
-            Caller = accounts[2];
 
         console.log('Caller:', Caller.address);
 

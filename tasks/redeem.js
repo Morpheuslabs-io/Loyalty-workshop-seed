@@ -30,8 +30,6 @@ task('redeem', 'Redeem loyalty points')
             Beneficiary = accounts[0];
         else if (caller == accounts[1].address)
             Beneficiary = accounts[1];
-        else if (caller == accounts[2].address)
-            Beneficiary = accounts[2];
 
         console.log('Operator:', Operator.address);
         console.log('Beneficiary:', Beneficiary.address);

@@ -7,7 +7,6 @@ task('accounts', 'Show account list')
         console.log('\nAccount List:');
         console.log('Account 1: %s', accounts[0].address);
         console.log('Account 2: %s', accounts[1].address);
-        console.log('Account 3: %s', accounts[2].address);
 
         console.log('\n ===== DONE =====');
     }

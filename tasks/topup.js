@@ -30,8 +30,6 @@ task('topup', 'Topup voucher value')
             Buyer = accounts[0];
         else if (buyer == accounts[1].address)
             Buyer = accounts[1];
-        else if (buyer == accounts[2].address)
-            Buyer = accounts[2];
 
         console.log('Operator:', Operator.address);
         console.log('Buyer:', Buyer.address);
