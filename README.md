@@ -48,6 +48,8 @@ yarn compile
 
 Now, it's all set and ready to run an experiment
 
+### Try it with Morpheus Labs SEED<br/>[![Open in SEED](https://morpheus-seed.infura-ipfs.io/ipfs/QmdLQKk1ygXJLN9aLp5gmyUi7sz51Cv8nY4dCgLWTiUr6R)](https://bps.morpheuslabs.io/pages/uploadproject/?f=factorycmbkd9ozkhj7tnby&p=https%3A%2F%2Fgithub.com%2FMorpheuslabs-io%2FLoyalty-workshop.git&installNode=true)
+
 <p align="center">
     <a href="./markdown/experiment.md#experiment_start">Let's move on</a>
 </p>
